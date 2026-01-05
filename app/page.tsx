@@ -9,9 +9,12 @@ export default function Home() {
 
 
   return (
-    <div >
-      <HeaderBox></HeaderBox>
-      <BoxGrid></BoxGrid>
+    <div className="h-screen overflow-hidden flex flex-col">
+      <HeaderBox />
+      <div className="flex-1 overflow-hidden">
+        <BoxGrid />
+      </div>
     </div>
+
   );
 }

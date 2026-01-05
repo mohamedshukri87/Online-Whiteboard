@@ -22,7 +22,7 @@ export default function BoxGrid() {
 
       const grid = document.getElementById("grid");
       if(grid){
-        grid.style.transform = "translateY(-50px)"
+        grid.style.transform = "translateY(-30px)"
       }
     }, []);
 
