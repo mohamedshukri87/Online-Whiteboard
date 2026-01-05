@@ -7,6 +7,7 @@ export default function HeaderBox() {
       borderColor="border.disabled"
       color="orange.400"
       bg="tomato"
+      overflow="visible"
     >
       Hello
     </Box>

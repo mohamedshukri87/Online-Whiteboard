@@ -4,7 +4,9 @@ import { Box } from "@chakra-ui/react";
 type MakeBoxProps = { x: number };
 
 function MakeBox({ x }: MakeBoxProps) {
-  if(x > 1560){
+
+  console.log(x);
+  if(x > 20){
     return null;
   }
 
