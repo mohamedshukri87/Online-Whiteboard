@@ -44,7 +44,7 @@ export default function BoxGrid() {
 
   return (
     
-    <div className="overflow:hidden">
+    <div >
       <Grid templateColumns="repeat(34, 0fr)" gap="0">
         {BoxArray.map((_, index) => (
           <Boxes 

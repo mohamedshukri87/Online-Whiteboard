@@ -9,7 +9,7 @@ export default function Home() {
 
 
   return (
-    <div>
+    <div >
       <HeaderBox></HeaderBox>
       <BoxGrid></BoxGrid>
     </div>
