@@ -1,17 +1,21 @@
 import { Box } from "@chakra-ui/react";
 
-
 type MakeBoxProps = { x: number };
 
 function MakeBox({ x }: MakeBoxProps) {
-
-  console.log(x);
-  if(x > 20){
+  if (x % 34 < 10 && x%34 > 24) {
+    
+    /*
+    |.   |                 |      |
+    |    |     VISIBLE     |      |
+    |    |                 |      |
+    |    |                 |      |
+    */
     return null;
   }
 
   return (
-      <Box
+    <Box
       p="9"
       borderWidth="1px"
       borderColor="grey"
@@ -19,8 +23,9 @@ function MakeBox({ x }: MakeBoxProps) {
       opacity="0.4"
       bg="white"
       width="10px"
+      translateX= "-300px"
     ></Box>
-    )
+  );
 }
 
 type BoxesProps = { index: number };
