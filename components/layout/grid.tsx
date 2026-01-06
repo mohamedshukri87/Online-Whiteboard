@@ -52,7 +52,7 @@ export default function BoxGrid() {
         gap="0"
       >
         {BoxArray.map((_, index) => (
-          <Boxes key={index} index={213} />
+          <Boxes key={index} index={750} />
         ))}
       </Grid>
     </div>
