@@ -1,3 +1,5 @@
+// draw at position y
+
 "use client";
 
 import Boxes from "@/components/ui/box";
@@ -16,15 +18,11 @@ export default function BoxGrid() {
 
   useEffect(() => {
     const grid = document.getElementById("grid");
-    if(grid){
-      const children = grid.querySelectorAll("*")
+    if (grid) {
+      const children = grid.querySelectorAll("*");
 
-      children.forEach((e) => {
- 
-        e.style.transform = "translateY(-100px) translateX(-210px)"
-
-
-      })
+  
+      
     }
   }, []);
 
@@ -46,18 +44,15 @@ export default function BoxGrid() {
 
   return (
     <div>
-      <Grid
+      <Grid className="position relative"
         ref={yourRef}
         id="grid"
         key="grid"
-        // grid repeats every 34 times.
-
-        // so keep the first and last 17 of a row in the array empty - this can move ! 
         templateColumns="repeat(34, 0fr)"
         gap="0"
       >
         {BoxArray.map((_, index) => (
-          <Boxes key={index} index={index} />
+          <Boxes key={index} index={213} />
         ))}
       </Grid>
     </div>
