@@ -2,27 +2,25 @@ import { Box } from "@chakra-ui/react";
 
 type BoxesProps = { 
   index: number,
-  differenceY: number
-
+  cameraY: number,
+  cameraX: number,
+  squareSize : number
  };
 
 
-type MakeBoxProps = { cameraX: number };
 
-// rerender the lines every time the user inputs something
-
-// if im starting at 213 px - i start at 200 as my screen 0 and move everything by 13
 
 // cameraX is where the screen should start at 0.
-function MakeBox({ index, differenceY }: BoxesProps) {
+function MakeBox({ index, cameraY , cameraX, squareSize}: BoxesProps) {
 
-  const ROWSIZE = 20;
+  const ROWSIZE = 22;
 
   const rowPosition = index % ROWSIZE
-  const colPosition = Math.floor(index / ROWSIZE) // 0 or 1 where horizontally we want to end up 0 but we're in index(74)
-  // rowPosition - 
-  const firstRow = Math.floor(differenceY / 74);
-  const offsetY = -(differenceY % 74);
+  const colPosition = Math.floor(index / ROWSIZE) 
+  const firstCol = Math.floor(cameraX / 74);
+  
+  const offsetY = -Math.abs(cameraY % 74);
+  const offsetX = -Math.abs(cameraX % 74);
 
   
 
@@ -31,7 +29,8 @@ function MakeBox({ index, differenceY }: BoxesProps) {
 
 
 
-  console.log(firstRow);
+  console.log("cameraX", cameraX, "cameraY", cameraY );
+
 
 
   return (
@@ -44,7 +43,7 @@ function MakeBox({ index, differenceY }: BoxesProps) {
       bg="white"
       width="10px"
       position= "relative"
-      right={rowOffset -74}
+      right={rowOffset +74 + offsetX} // -74 takes the column RIGHT - 
       top={-index*74 + (colPosition*74) + offsetY}
   
       ></Box>
@@ -52,6 +51,6 @@ function MakeBox({ index, differenceY }: BoxesProps) {
 }
 
 
-export default function Boxes({ index , differenceY}: BoxesProps) {
-  return <MakeBox index={index} differenceY={differenceY} />;
+export default function Boxes({ index , cameraY, cameraX, squareSize}: BoxesProps) {
+  return <MakeBox index={index} cameraY={cameraY} cameraX={cameraX} squareSize={squareSize}/>;
 }

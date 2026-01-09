@@ -7,41 +7,31 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 
-const BoxArray: number[] = new Array(1545).fill(0);
+const BoxArray: number[] = new Array(1645).fill(0);
 
 export default function BoxGrid() {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [z, setZ] = useState(0);
-  const [mouseDown, setMouseDown] = useState(false)
-  const [differenceX, setDifferenceX] = useState(0);
-  const [differenceY, setDifferenceY] = useState(0);
 
-  const [mouseUp, setMouseUp] = useState(false);
-  const [camera, setCamera] = useState({ x: 0, y: 0 });
-  const yourRef = useRef(null);
 
-  const lastY = useRef(0);
-  
+  const squareSize = 74;
+  const [mouseDown, setMouseDown] = useState(false);
+  const [cameraX, setcameraX] = useState(0);
+  const [cameraY, setCameraY] = useState(0);
+  const [lastCoordinates, setLastCoordinates] = useState([0,0]);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: { clientX: number; clientY: number; }) => {
     setMouseDown(true);
-    lastY.current = e.clientY;
+    setLastCoordinates([e.clientX, e.clientY])
   };
 
-  const handleMouseUp = () => {
-    setMouseDown(false);
-  };
 
-  const handleMouseMove = (e) => {
-    if (!mouseDown) return;
-
-    const deltaY = e.clientY - lastY.current;
-    lastY.current = e.clientY;
-
-    setDifferenceY(prev => prev - (deltaY*0.2));
-
-    if(differenceY / 74 > 1.5){
+  const handleMouseMove = (e: { clientX: number; clientY: number; }) => {
+    if (!mouseDown  ) return;
+    const deltaX = e.clientX - lastCoordinates[0];
+    const deltaY = e.clientY - lastCoordinates[1];
+    setLastCoordinates([e.clientX, e.clientY])
+    setCameraY(prev => prev - (deltaY*0.08));
+    setcameraX(prev => prev - (deltaX*0.1));
+    if(Math.abs(cameraY / squareSize) > 1.5 || Math.abs(cameraX / squareSize) > 0.001){
       setMouseDown(false);
     }
   };
@@ -49,10 +39,10 @@ export default function BoxGrid() {
 
 
   return (
-    <div onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove}>
+    <div onMouseDown={handleMouseDown} onMouseUp={ () => {setMouseDown(false)}} onMouseMove={handleMouseMove}>
       <div className="position relative" >
         {BoxArray.map((_, index) => (
-          <Boxes key={index} index={index} differenceY={differenceY} />
+          <Boxes key={index} index={index} cameraY={cameraY} cameraX={cameraX} squareSize={squareSize} />
         ))}
       </div>
     </div>
