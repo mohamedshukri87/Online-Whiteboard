@@ -9,7 +9,7 @@ type BoxesProps = {
 
 // cameraX is where the screen should start at 0.
 function MakeBox({ index, cameraY, cameraX, squareSize }: BoxesProps) {
-  const ROWSIZE = 22;
+  const ROWSIZE = 36;
 
   const rowPosition = index % ROWSIZE;
   const colPosition = Math.floor(index / ROWSIZE);
@@ -33,8 +33,8 @@ function MakeBox({ index, cameraY, cameraX, squareSize }: BoxesProps) {
       bg="white"
       width="10px"
       position="relative"
-      right={rowOffset - 274 + offsetX} // -74 takes the column RIGHT -
-      top={-index * 74 + colPosition * 74 + offsetY}
+      right={rowOffset + 74 + offsetX} // -74 takes the column RIGHT -
+      top={-index * 74 - colOffset + offsetY}
     ></Box>
   );
 }
