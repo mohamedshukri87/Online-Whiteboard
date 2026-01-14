@@ -1,4 +1,12 @@
 import { Box } from "@chakra-ui/react";
+import SheetArea from "../ui/sheet";
+import SettingsBar from "../ui/settings";
+import { Settings } from "lucide-react";
+import Profile from "../ui/avatar";
+import { TfiSettings } from "react-icons/tfi";
+import { BiHelpCircle } from "react-icons/bi";
+import { AiOutlineMenu } from "react-icons/ai";
+
 export default function HeaderBox() {
   return (
     <Box
@@ -9,7 +17,29 @@ export default function HeaderBox() {
       bg="tomato"
       overflow="visible"
     >
-      Hello
+      <SettingsBar
+        identifier={<AiOutlineMenu />}
+        data={[
+          { value: "new-board", label: "New Board", shortcut: "CTRL+N" },
+          { value: "clear-board", label: "Clear Board", shortcut: "CTRL+C" },
+          { value: "settings", label: "Settings", shortcut: "CTRL+S" },
+          { value: "about", label: "About", shortcut: "CTRL+A" },
+        ]}
+      />
+      <div className=" relative left-25 bottom-6 font-bold text-white text-xl h-0 ">
+        Untitled Board
+      </div>
+      <div className="w-50 h-0 relative left-420 bottom-9">
+        <Profile></Profile>
+      </div>
+
+      <div className="w-50 h-1 relative left-435 bottom-7.5">
+        <SettingsBar identifier={<Settings />} />
+      </div>
+
+      <div className="w-50 h-1 relative left-448 bottom-8.5">
+        <SettingsBar identifier={<BiHelpCircle />} />
+      </div>
     </Box>
   );
 }

@@ -1,28 +1,14 @@
-"use client";
+import { useState } from "react";
 
-import { useState, useEffect } from "react";
+function useIteratorToUpdateState<T>(result?: T) {
+  const [s, set] = useState({
+    value: big,
+    forceUpdate: 1,
+  })
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
-export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions(),
+   const updateState = (big: T) => set(curr =>
+    ({ value: big, forceUpdate: curr.forceUpdate + 1 })
   );
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return windowDimensions;
+  return [s.value, updateState];
 }
