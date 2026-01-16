@@ -5,17 +5,29 @@
 import Boxes from "@/components/ui/box";
 import { Grid, GridItem } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { Box } from "@chakra-ui/react";
+import useRemoveZoom from "@/hooks/removeZoom";
 
 const BoxArray: number[] = new Array(2000).fill(0);
 
 export default function BoxGrid() {
+
   const squareSize = 74;
   const [mouseDown, setMouseDown] = useState(false);
   const [cameraX, setcameraX] = useState(0);
   const [cameraY, setCameraY] = useState(0);
   const [lastCoordinates, setLastCoordinates] = useState([0, 0]);
+  const [zoom, setZoom] = useState(1);
+
+  
+      
+  
+
+  
+
+
+
+  
 
   const handleMouseDown = (e: { clientX: number; clientY: number }) => {
     setMouseDown(true);
@@ -37,6 +49,15 @@ export default function BoxGrid() {
     }
   };
 
+  const calculateZoom = (e: { ctrlKey: never; deltaY: number; }) => {
+
+        const nextZoom = zoom * (e.deltaY < 0 ? 1.1 : 0.9);
+        setZoom((nextZoom < 0.5 ) ? 0.5 : (nextZoom > 5) ? 5 : nextZoom)
+
+    }
+      
+  
+  
 
   return (
     <div
@@ -44,7 +65,9 @@ export default function BoxGrid() {
       onMouseUp={() => {
         setMouseDown(false);
       }}
-      onMouseMove={handleMouseMove}
+      onWheel={calculateZoom}
+  
+
     >
       <div className="position relative">
 
@@ -52,8 +75,7 @@ export default function BoxGrid() {
     
           transform={`
             translate(${-cameraX}px, ${-cameraY}px)
-          `}
-          zoom={0}
+            scale(${zoom})`}
           transformOrigin="0 0"
         >
         {BoxArray.map((_, index) => (

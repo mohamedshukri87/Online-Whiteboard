@@ -1,30 +1,18 @@
 "use client"
 import React, { useState, useEffect} from 'react';
 
-function RemoveZoom() {
+function useRemoveZoom() {
     useEffect(() => {
-      const handleWheel = (e) => {
-        if (e.ctrlKey || e.metaKey) {
+      const handleWheel = (e: { ctrlKey: any; metaKey: any; preventDefault: () => void; }) => {
+        if (e.ctrlKey ) {
           e.preventDefault();
+          return true;
         }
       };
   
-      const handleKeyDown = (e) => {
-        if ((e.ctrlKey || e.metaKey)) {
-          e.preventDefault();
-        }
-      };
+
   
       window.addEventListener("wheel", handleWheel, { passive: false });
-      window.addEventListener("keydown", handleKeyDown, { passive: false });
-  
-      return () => {
-        window.removeEventListener('wheel', handleWheel);
-        window.removeEventListener('keydown', handleKeyDown);
-      };
-    }, []);
-  
-    return null;
-  }
+    })}
 
-export default RemoveZoom;
+export default useRemoveZoom;

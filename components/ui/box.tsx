@@ -22,7 +22,6 @@ function MakeBox({ index, cameraY, cameraX, squareSize }: BoxesProps) {
   const rowOffset = -rowPosition * 74;
   const colOffset = -colPosition * 74;
 
-  console.log("cameraX", cameraX, "cameraY", cameraY);
 
   return (
     <Box
