@@ -6,6 +6,7 @@ import Boxes from "@/components/ui/box";
 import { Grid, GridItem } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { Box } from "@chakra-ui/react";
 
 const BoxArray: number[] = new Array(2000).fill(0);
 
@@ -36,6 +37,7 @@ export default function BoxGrid() {
     }
   };
 
+
   return (
     <div
       onMouseDown={handleMouseDown}
@@ -45,6 +47,15 @@ export default function BoxGrid() {
       onMouseMove={handleMouseMove}
     >
       <div className="position relative">
+
+          <Box
+    
+          transform={`
+            translate(${-cameraX}px, ${-cameraY}px)
+          `}
+          zoom={0}
+          transformOrigin="0 0"
+        >
         {BoxArray.map((_, index) => (
           <Boxes
             key={index}
@@ -53,7 +64,9 @@ export default function BoxGrid() {
             cameraX={cameraX}
             squareSize={squareSize}
           />
+
         ))}
+        </Box>
       </div>
     </div>
   );

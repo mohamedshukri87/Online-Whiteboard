@@ -11,6 +11,7 @@ type BoxesProps = {
 function MakeBox({ index, cameraY, cameraX, squareSize }: BoxesProps) {
   const ROWSIZE = 36;
 
+  // 1 , 2 , 3 .. 36 = 0
   const rowPosition = index % ROWSIZE;
   const colPosition = Math.floor(index / ROWSIZE);
   const firstCol = Math.floor(cameraX / 74);
@@ -33,8 +34,8 @@ function MakeBox({ index, cameraY, cameraX, squareSize }: BoxesProps) {
       bg="white"
       width="10px"
       position="relative"
-      right={rowOffset + 74 + offsetX} // -74 takes the column RIGHT -
-      top={-index * 74 - colOffset + offsetY}
+      top={-index*74  +(rowPosition*74)}
+      right={74-colPosition*74}
     ></Box>
   );
 }
