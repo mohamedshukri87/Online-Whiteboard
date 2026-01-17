@@ -26,18 +26,18 @@ export default function HeaderBox() {
           { value: "about", label: "About", shortcut: "CTRL+A" },
         ]}
       />
-      <div className=" relative left-25 bottom-6 font-bold text-white text-xl h-0 ">
+      <div className=" relative left-25 bottom-6 font-bold text-white text-xs h-0 ">
         Untitled Board
       </div>
-      <div className="w-50 h-0 relative left-420 bottom-9">
+      <div className="w-50 h-0 relative left-295 bottom-8.5">
         <Profile></Profile>
       </div>
 
-      <div className="w-50 h-1 relative left-435 bottom-7.5">
+      <div className="w-50 h-0 relative left-310 bottom-7.5">
         <SettingsBar identifier={<Settings />} />
       </div>
 
-      <div className="w-50 h-1 relative left-448 bottom-8.5">
+      <div className="w-50 h-0 relative left-325 bottom-7.5">
         <SettingsBar identifier={<BiHelpCircle />} />
       </div>
     </Box>

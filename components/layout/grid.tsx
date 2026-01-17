@@ -2,7 +2,7 @@
 
 "use client";
 
-import Boxes from "@/components/ui/box";
+import Boxes from "@/components/ui/squares";
 import { Grid, GridItem } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
 import { Box } from "@chakra-ui/react";
