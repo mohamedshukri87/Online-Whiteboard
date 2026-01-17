@@ -52,7 +52,7 @@ export default function BoxGrid() {
   const calculateZoom = (e: { ctrlKey: never; deltaY: number; }) => {
 
         const nextZoom = zoom * (e.deltaY < 0 ? 1.1 : 0.9);
-        setZoom((nextZoom < 0.5 ) ? 0.5 : (nextZoom > 5) ? 5 : nextZoom)
+        setZoom((nextZoom < 0.899) ? 0.899: (nextZoom > 5) ? 5 : nextZoom)
 
     }
       
@@ -62,6 +62,7 @@ export default function BoxGrid() {
   return (
     <div
       onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
       onMouseUp={() => {
         setMouseDown(false);
       }}
@@ -74,7 +75,6 @@ export default function BoxGrid() {
           <Box
     
           transform={`
-            translate(${-cameraX}px, ${-cameraY}px)
             scale(${zoom})`}
           transformOrigin="0 0"
         >
