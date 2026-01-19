@@ -5,7 +5,9 @@ import ZoomTab from "@/components/ui/ZoomTab";
 export default function Home() {
 
   return (
-    <div>
+    
+    <div className="h-screen overflow-hidden flex flex-col relative">
+        
         <RemoveZoom></RemoveZoom>
         <HoverPage></HoverPage>
         <ZoomTab></ZoomTab>

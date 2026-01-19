@@ -11,9 +11,7 @@ import { stat } from "fs";
 
 const BoxArray: number[] = new Array(2000).fill(0);
 
-
 export default function BoxGrid() {
- 
   const squareSize = 74;
   const [mouseDown, setMouseDown] = useState(false);
   const [cameraX, setcameraX] = useState(0);
@@ -43,29 +41,22 @@ export default function BoxGrid() {
   };
 
   const calculateZoom = (e: { ctrlKey: never; deltaY: number }) => {
-  
-    if (e.deltaY < 0 ) {
-      if(useZoomStore.getState().zoom < 5){
+    if (e.deltaY < 0) {
+      if (useZoomStore.getState().zoom < 5) {
         useZoomStore.getState().increaseZoom();
-      }
-      else{
+      } else {
         useZoomStore.getState().maximumZoom();
       }
-
-    }
-    else{
-      if(useZoomStore.getState().zoom > 0.899){
+    } else {
+      if (useZoomStore.getState().zoom > 0.899) {
         useZoomStore.getState().decreaseZoom();
-      }
-      else{
+      } else {
         useZoomStore.getState().minimumZoom();
       }
     }
-
   };
 
   return (
-    
     <div
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
