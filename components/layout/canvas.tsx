@@ -1,8 +1,7 @@
 "use client";
 
 import {
-  CanvasHTMLAttributes,
-  DetailedHTMLProps,
+
   SetStateAction,
   useEffect,
   useState,
@@ -19,7 +18,7 @@ export default function Canvas() {
     ) as HTMLCanvasElement;
 
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight
+    canvas.height = window.innerHeight;
 
   }, []
 
@@ -30,14 +29,14 @@ export default function Canvas() {
   }) => {
     init(e);
     setDrawing(true);
+
   };
   const mouseUp = () => {
     setDrawing(false);
   };
 
   const init = (e: {
-    offsetX: SetStateAction<number>;
-    offsetY: SetStateAction<number>;
+    [x: string]: SetStateAction<number>;
   }) => {
     setPosX(e.clientX);
     setPosY(e.clientY);
@@ -48,7 +47,10 @@ export default function Canvas() {
   ) => {
  
 
-    if (drawing && canvas != null) {
+    if (drawing && e.clientY > 74) {
+    const canvas: HTMLCanvasElement = document.getElementById(
+      "canvas",
+    ) as HTMLCanvasElement;
       const ctx = canvas.getContext("2d");
       ctx?.beginPath();
       ctx?.moveTo(posX, posY);
