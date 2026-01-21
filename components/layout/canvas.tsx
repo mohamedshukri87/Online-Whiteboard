@@ -6,12 +6,16 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useHistoryStore, useZoomStore } from "../ui/store";
 
+// next task: store every movement to session storage.
 export default function Canvas() {
   const [posX, setPosX] = useState(0);
   const [posY, setPosY] = useState(0);
   const [drawing, setDrawing] = useState(false);
 
+ const zoom = useZoomStore((state) => state.zoom);
+  
   useEffect( () => {
     const canvas: HTMLCanvasElement = document.getElementById(
       "canvas",
@@ -43,34 +47,41 @@ export default function Canvas() {
   };
 
   const mouseMove = (
-    e
+    e: { clientX: number; clientY: number; }
   ) => {
- 
-
-    if (drawing && e.clientY > 74) {
     const canvas: HTMLCanvasElement = document.getElementById(
       "canvas",
     ) as HTMLCanvasElement;
+    if (drawing) {
       const ctx = canvas.getContext("2d");
       ctx?.beginPath();
-      ctx?.moveTo(posX, posY);
-      ctx?.lineTo(e.clientX, e.clientY);
+      useHistoryStore.getState().appendMoveHistory(posX, posY);
+      useHistoryStore.getState().appendDrawingHistory(e.clientX, e.clientY);
+      ctx?.moveTo(posX / zoom , (posY - 74) / zoom );
+    
+      ctx?.lineTo(e.clientX / zoom, (e.clientY - 74) / zoom);
       ctx?.stroke();
       ctx?.closePath();
 
 
-      setPosX(e.clientX);
+      setPosX(e.clientX );
       setPosY(e.clientY);
     }
   };
 
   return (
     <canvas
-      id="canvas"
-      className="fixed top-0 left-0 "
-      onMouseDown={mouseDown}
-      onMouseUp={mouseUp}
-      onMouseMove={mouseMove}
-    ></canvas>
+    id="canvas"
+    className={`fixed top-0 left-0 origin-top-left `}
+    style={{
+    transform: `translateY(${74}px) scale(${zoom})`,
+    transformOrigin: "top left"
+    }}
+
+    onMouseDown={mouseDown}
+    onMouseUp={mouseUp}
+    onMouseMove={mouseMove}
+/>
+
   );
 }
