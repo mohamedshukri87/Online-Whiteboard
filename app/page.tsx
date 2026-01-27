@@ -1,6 +1,7 @@
 import HoverPage from "@/components/layout/HoverPage";
 import RemoveZoom from "@/hooks/removeZoom";
 import ZoomTab from "@/components/ui/ZoomTab";
+import SideBar from "@/components/layout/SideBar";
 
 export default function Home() {
 
@@ -11,6 +12,7 @@ export default function Home() {
         <RemoveZoom></RemoveZoom>
         <HoverPage></HoverPage>
         <ZoomTab></ZoomTab>
+        <SideBar></SideBar>
         </div>
   );
 }

@@ -16,6 +16,15 @@ interface HistoryState {
     appendDrawingHistory: (num1 : number, num2 : number) => void;
 }
 
+// make sure only one of these is true at a time.
+interface ActiveState {
+
+  drawing: boolean;
+  panning: boolean;
+
+  changeState: (mode : number) => void;
+}
+
 export const useZoomStore = create<ZoomState>()((set) => ({
   zoom: 1,
   increaseZoom: () =>
@@ -38,5 +47,17 @@ export const useHistoryStore = create<HistoryState>()((set) => ({
 
     appendMoveHistory: (num1 : number, num2 : number) => set((state) => ({ moveHistory: [...state.moveHistory, [num1, num2]] })),
     appendDrawingHistory: (num1 : number, num2 : number) => set((state) => ({ drawingHistory: [...state.drawingHistory, [num1, num2]] })),
+
+}));
+
+// set 1 as false and the rest as default
+export const useActiveStore = create<ActiveState>()((set) => ({
+  drawing: false,
+  panning: false,
+
+  changeState: (mode : number) => set(() => ({ drawing: mode === 1 ? true : false, panning: mode === 2 ? true : false })),
+
+
+
 
 }));

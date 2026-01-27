@@ -7,6 +7,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef, use } from "react";
 import { Box } from "@chakra-ui/react";
 import { useZoomStore } from "../ui/store";
+import { useActiveStore } from "../ui/store";
 import { stat } from "fs";
 
 const BoxArray: number[] = new Array(2000).fill(0);
@@ -19,6 +20,7 @@ export default function BoxGrid() {
   const [lastCoordinates, setLastCoordinates] = useState([0, 0]);
 
   const zoom = useZoomStore((state) => state.zoom);
+  const panning = useActiveStore((state) => state.panning);
 
   const handleMouseDown = (e: { clientX: number; clientY: number }) => {
     setMouseDown(true);
@@ -64,6 +66,9 @@ export default function BoxGrid() {
         setMouseDown(false);
       }}
       onWheel={calculateZoom}
+      style={{
+        pointerEvents: panning ? "auto" : "none",
+      }}
     >
       <div className="position relative">
         <Box
