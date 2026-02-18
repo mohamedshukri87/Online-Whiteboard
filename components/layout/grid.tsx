@@ -10,7 +10,7 @@ import { useZoomStore } from "../ui/store";
 import { useActiveStore } from "../ui/store";
 import { stat } from "fs";
 
-const BoxArray: number[] = new Array(400).fill(0);
+const BoxArray: number[] = new Array(500).fill(0);
 
 export default function BoxGrid() {
   const squareSize = 74;
@@ -22,10 +22,27 @@ export default function BoxGrid() {
   const zoom = useZoomStore((state) => state.zoom);
   const panningCounter= useActiveStore((state) => state.panningCounter);
 
-  const ctx = document?.getElementById("canvas")?.getContext('2d');
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    BoxArray.forEach((_, index) => {
+      const x = (index % 32) * 74 + (cameraX % 74) - 74;
+      const y = Math.floor(index / 32) * 74 + (cameraY % 74) - 74;
+
+      ctx.strokeRect(x, y, 74, 74);
+    });
+  }, [BoxArray, cameraX, cameraY]);
+
   // canvasRef is undefined use ctx instead
-  if(ctx){
-  }
+
 // useEffect(() => {
   //const ctx = canvasRef.current?.getContext('2d');
   //if (!ctx) return;
@@ -44,18 +61,14 @@ export default function BoxGrid() {
   };
 
   const handleMouseMove = (e: { clientX: number; clientY: number }) => {
+    console.log("mouse move");
     if (!mouseDown) return;
     const changeX = e.clientX - lastCoordinates[0];
     const changeY = e.clientY - lastCoordinates[1];
     setLastCoordinates([e.clientX, e.clientY]);
-    setCameraY((prev) => prev - changeY * 0.08);
-    setcameraX((prev) => prev - changeX * 0.1);
-    if (
-      Math.abs(cameraY / squareSize) > 1.5 ||
-      Math.abs(cameraX / squareSize) > 0.001
-    ) {
-      setMouseDown(false);
-    }
+    setCameraY((prev) => prev + (changeY) );
+    setcameraX((prev) => prev +  (changeX) );
+ 
   };
 
   const calculateZoom = (e: { ctrlKey: never; deltaY: number }) => {
@@ -75,21 +88,13 @@ export default function BoxGrid() {
   };
 
 return (
-
-<canvas
-  ref={(canvas) => {
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    BoxArray.forEach((_, index) => {
-      const x = (index % 32) * 74;
-      const y = Math.floor(index / 32) * 74;
-
-      ctx.strokeRect(x, y, 74, 74);
-    });
-  }}
-/>
-
-)}
+    <canvas
+      ref={canvasRef}
+      width={2000}
+      height={1000}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={() => setMouseDown(false)}
+    />
+  );
+}
