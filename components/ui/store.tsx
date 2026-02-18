@@ -1,4 +1,5 @@
 // store.ts
+import { PanelBottomOpen } from "lucide-react";
 import { create } from "zustand";
 
 interface ZoomState {
@@ -21,6 +22,7 @@ interface ActiveState {
 
   drawing: boolean;
   panning: boolean;
+  panningCounter: number;
 
   changeState: (mode : number) => void;
 }
@@ -54,8 +56,9 @@ export const useHistoryStore = create<HistoryState>()((set) => ({
 export const useActiveStore = create<ActiveState>()((set) => ({
   drawing: false,
   panning: false,
+  panningCounter: 0,
 
-  changeState: (mode : number) => set(() => ({ drawing: mode === 1 ? true : false, panning: mode === 2 ? true : false })),
+  changeState: (mode : number) => set((state) => ({ drawing: mode === 1 ? true : false, panning: mode === 2 ? true : false, panningCounter: mode === 2 ? state.panningCounter + 1 : 0 })),
 
 
 

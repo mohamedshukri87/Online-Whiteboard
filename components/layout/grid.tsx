@@ -10,7 +10,7 @@ import { useZoomStore } from "../ui/store";
 import { useActiveStore } from "../ui/store";
 import { stat } from "fs";
 
-const BoxArray: number[] = new Array(2000).fill(0);
+const BoxArray: number[] = new Array(400).fill(0);
 
 export default function BoxGrid() {
   const squareSize = 74;
@@ -20,7 +20,23 @@ export default function BoxGrid() {
   const [lastCoordinates, setLastCoordinates] = useState([0, 0]);
 
   const zoom = useZoomStore((state) => state.zoom);
-  const panning = useActiveStore((state) => state.panning);
+  const panningCounter= useActiveStore((state) => state.panningCounter);
+
+  const ctx = document?.getElementById("canvas")?.getContext('2d');
+  // canvasRef is undefined use ctx instead
+  if(ctx){
+  }
+// useEffect(() => {
+  //const ctx = canvasRef.current?.getContext('2d');
+  //if (!ctx) return;
+
+  //ctx.clearRect(0, 0, canvasRef?.current?.width, canvasRef?.current?.height);
+ /// BoxArray.forEach((_, index) => {
+   // const x = (index % 32) * 74 + cameraX;
+  //  const y = (Math.floor(index / 32) * 74) + cameraY;
+  //  ctx.strokeRect(x, y, 74, 74);
+ // });
+//}, panningCounter);
 
   const handleMouseDown = (e: { clientX: number; clientY: number }) => {
     setMouseDown(true);
@@ -58,35 +74,22 @@ export default function BoxGrid() {
     }
   };
 
-  return (
-    <div
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={() => {
-        setMouseDown(false);
-      }}
-      onWheel={calculateZoom}
-      style={{
-        pointerEvents: panning ? "auto" : "none",
-      }}
-    >
-      <div className="position relative">
-        <Box
-          transform={`
-            scale(${zoom})`}
-          transformOrigin="0 0"
-        >
-          {BoxArray.map((_, index) => (
-            <Boxes
-              key={index}
-              index={index}
-              cameraY={cameraY}
-              cameraX={cameraX}
-              squareSize={squareSize}
-            />
-          ))}
-        </Box>
-      </div>
-    </div>
-  );
-}
+return (
+
+<canvas
+  ref={(canvas) => {
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    BoxArray.forEach((_, index) => {
+      const x = (index % 32) * 74;
+      const y = Math.floor(index / 32) * 74;
+
+      ctx.strokeRect(x, y, 74, 74);
+    });
+  }}
+/>
+
+)}

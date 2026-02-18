@@ -9,7 +9,7 @@ type BoxesProps = {
 
 // cameraX is where the screen should start at 0.
 function MakeBox({ index, cameraY, cameraX, squareSize }: BoxesProps) {
-  const ROWSIZE = 32;
+  const ROWSIZE = 10;
 
   // 1 , 2 , 3 .. 36 = 0
   const rowPosition = index % ROWSIZE;
