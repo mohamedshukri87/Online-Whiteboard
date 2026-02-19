@@ -13,7 +13,6 @@ export default function HoverPage() {
         <HeaderBox />
         <div className=" flex-1 overflow-hidden">
           <BoxGrid />
-          <Canvas></Canvas>
         </div>
       </div>
     </webview>

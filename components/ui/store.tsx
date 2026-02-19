@@ -1,5 +1,4 @@
 // store.ts
-import { PanelBottomOpen } from "lucide-react";
 import { create } from "zustand";
 
 interface ZoomState {
@@ -10,10 +9,10 @@ interface ZoomState {
   minimumZoom: () => void;
 }
 interface HistoryState {
-    moveHistory: [number, number][];
+    moveHistory: [number, number, number, number][];
     drawingHistory: [number, number][];
 
-    appendMoveHistory: (num1 : number, num2 : number) => void;
+    appendMoveHistory: (num1 : number, num2 : number, num3 : number, num4 : number) => void;
     appendDrawingHistory: (num1 : number, num2 : number) => void;
 }
 
@@ -22,7 +21,6 @@ interface ActiveState {
 
   drawing: boolean;
   panning: boolean;
-  panningCounter: number;
 
   changeState: (mode : number) => void;
 }
@@ -44,21 +42,22 @@ export const useZoomStore = create<ZoomState>()((set) => ({
 
 export const useHistoryStore = create<HistoryState>()((set) => ({
 
-    moveHistory: [] as [number, number][],
+    moveHistory: [] as [number, number, number, number][],
     drawingHistory: [] as [number, number][],
 
-    appendMoveHistory: (num1 : number, num2 : number) => set((state) => ({ moveHistory: [...state.moveHistory, [num1, num2]] })),
+    appendMoveHistory: (num1 : number, num2 : number, num3 : number, num4 : number) => set((state) => ({ moveHistory: [...state.moveHistory, [num1, num2, num3, num4]] })),
     appendDrawingHistory: (num1 : number, num2 : number) => set((state) => ({ drawingHistory: [...state.drawingHistory, [num1, num2]] })),
-
-}));
+    // type not assignable??
+    
+  }));
 
 // set 1 as false and the rest as default
 export const useActiveStore = create<ActiveState>()((set) => ({
   drawing: false,
   panning: false,
-  panningCounter: 0,
+  
 
-  changeState: (mode : number) => set((state) => ({ drawing: mode === 1 ? true : false, panning: mode === 2 ? true : false, panningCounter: mode === 2 ? state.panningCounter + 1 : 0 })),
+  changeState: (mode : number) => set(() => ({ drawing: mode === 1 ? true : false, panning: mode === 2 ? true : false })),
 
 
 

@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import { SetStateAction, useEffect, useState } from "react";
 import { useHistoryStore, useZoomStore, useActiveStore } from "../ui/store";
@@ -20,6 +20,7 @@ export default function Canvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }, []);
+  
   const mouseDown = (e: {
     offsetX: SetStateAction<number>;
     offsetY: SetStateAction<number>;
@@ -71,3 +72,4 @@ export default function Canvas() {
     />
   );
 }
+*/
