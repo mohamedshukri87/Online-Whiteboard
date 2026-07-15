@@ -3,10 +3,12 @@
 import HeaderBox from "@/components/layout/header";
 import BoxGrid from "@/components/layout/grid";
 import { useEffect } from "react";
-import Canvas from "@/components/layout/canvas";
 import { useHistoryStore } from "@/components/ui/store";
+import useRemoveZoom from "@/hooks/removeZoom";
 
 export default function HoverPage() {
+
+  useRemoveZoom();
 
   useEffect(() => {
     const raw = localStorage.getItem("whiteboard-history");

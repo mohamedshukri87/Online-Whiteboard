@@ -3,13 +3,13 @@
 import { AiOutlineMenu } from "react-icons/ai";
 
 export default function SheetArea() {
-  const mouseOver = (event) => {
-    event.target.style.background = "rgb(0,0,0)";
-  };
+const mouseOver = (event: React.MouseEvent<HTMLDivElement>) => {
+  event.currentTarget.style.background = "rgb(0,0,0)";
+};
 
-  const mouseOut = (event) => {
-    event.target.style.background = "";
-  };
+const mouseOut = (event: React.MouseEvent<HTMLDivElement>) => {
+  event.currentTarget.style.background = "";
+};
   return (
     <div
       id="menu-bar"
