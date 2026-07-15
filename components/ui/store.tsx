@@ -1,6 +1,20 @@
 // store.ts
 import { create } from "zustand";
 
+const STORAGE_KEY = "whiteboard-history";
+
+// helper: save current history to localStorage
+function saveToStorage(moveHistory: any, drawingHistory: any) {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ moveHistory, drawingHistory })
+    );
+  } catch (e) {
+    console.error("Failed to save whiteboard:", e);
+  }
+}
+
 interface ZoomState {
   zoom: number;
   increaseZoom: () => void;
@@ -14,6 +28,7 @@ interface HistoryState {
 
     appendMoveHistory: (num1 : number, num2 : number, num3 : number, num4 : number) => void;
     appendDrawingHistory: (num1 : number, num2 : number) => void;
+    clearHistory: () => void;
 }
 
 // make sure only one of these is true at a time.
@@ -40,13 +55,25 @@ export const useZoomStore = create<ZoomState>()((set) => ({
 }));
 
 
-export const useHistoryStore = create<HistoryState>()((set) => ({
+export const useHistoryStore = create<HistoryState>()((set, get) => ({
 
     moveHistory: [] as [number, number, number, number][],
     drawingHistory: [] as [number, number][],
 
-    appendMoveHistory: (num1 : number, num2 : number, num3 : number, num4 : number) => set((state) => ({ moveHistory: [...state.moveHistory, [num1, num2, num3, num4]] })),
-    appendDrawingHistory: (num1 : number, num2 : number) => set((state) => ({ drawingHistory: [...state.drawingHistory, [num1, num2]] })),
+    appendMoveHistory: (num1 : number, num2 : number, num3 : number, num4 : number) => set((state) => {
+      const updated = [...state.moveHistory, [num1, num2, num3, num4]] as [number, number, number, number][];
+      saveToStorage(updated, get().drawingHistory);
+      return { moveHistory: updated };
+    }),
+    appendDrawingHistory: (num1 : number, num2 : number) => set((state) => {
+      const updated = [...state.drawingHistory, [num1, num2]] as [number, number][];
+      saveToStorage(get().moveHistory, updated);
+      return { drawingHistory: updated };
+    }),
+    clearHistory: () => {
+      saveToStorage([], []);
+      set({ moveHistory: [], drawingHistory: [] });
+    },
     // type not assignable??
     
   }));

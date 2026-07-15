@@ -24,6 +24,8 @@ export default function BoxGrid() {
 
   const zoom = useZoomStore((state) => state.zoom);
   const drawingAllowed = useActiveStore((state) => state.drawing);
+  const moveHistory = useHistoryStore((state) => state.moveHistory);
+  const drawingHistory = useHistoryStore((state) => state.drawingHistory);
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -54,7 +56,7 @@ export default function BoxGrid() {
 
 
 
-  }, [BoxArray, cameraX, cameraY]);
+  }, [BoxArray, cameraX, cameraY, moveHistory, drawingHistory]);
 
 
   const handleMouseDown = (e: { clientX: number; clientY: number }) => {

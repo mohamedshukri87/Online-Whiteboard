@@ -27,7 +27,6 @@ export default function HeaderBox() {
         ]}
       />
       <div className=" relative left-25 bottom-6 font-bold text-white text-xs h-0 ">
-        Untitled Board
       </div>
       <div className="w-50 h-0 relative left-295 bottom-8.5">
         <Profile></Profile>
