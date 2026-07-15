@@ -22,8 +22,7 @@ export default function HeaderBox() {
         data={[
           { value: "new-board", label: "New Board", shortcut: "CTRL+N" },
           { value: "clear-board", label: "Clear Board", shortcut: "CTRL+C" },
-          { value: "settings", label: "Settings", shortcut: "CTRL+S" },
-          { value: "about", label: "About", shortcut: "CTRL+A" },
+  
         ]}
       />
       <div className=" relative left-25 bottom-6 font-bold text-white text-xs h-0 ">

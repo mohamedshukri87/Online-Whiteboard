@@ -1,6 +1,7 @@
 import { Button, Menu, Portal } from "@chakra-ui/react";
 import { ReactElement } from "react";
 import { IconType } from "react-icons";
+import { useHistoryStore } from "@/components/ui/store";
 
 type TabDetails = {
   identifier: ReactElement;
@@ -15,6 +16,22 @@ type TabDetails = {
 export default function SettingsBar(props: TabDetails) {
   console.log(props.data);
 
+  const clearHistory = useHistoryStore((state) => state.clearHistory);
+
+  const handleSelect = (details: { value: string }) => {
+    switch (details.value) {
+      case "clear-board":
+        clearHistory();
+        break;
+      case "new-board":
+        // same effect for now — wipes current strokes to start fresh
+        clearHistory();
+        break;
+      default:
+        break;
+    }
+  };
+
   const content = props.data ? (
     <Menu.Content bg="tomato">
       {props.data.map((tab) => (
@@ -28,7 +45,7 @@ export default function SettingsBar(props: TabDetails) {
   );
 
   return (
-    <Menu.Root>
+    <Menu.Root onSelect={handleSelect}>
       <Menu.Trigger asChild>
         <Button variant="solid" color="black" size="xs">
           {props.identifier}
@@ -39,4 +56,5 @@ export default function SettingsBar(props: TabDetails) {
       </Portal>
     </Menu.Root>
   );
+
 }
